@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Sistema de Estoque</title>
+
+    <link
+        rel="stylesheet"
+        href="./css/style.css"
+    >
+</head>
+
+<body>
+
+    <!-- =========================================
+         MENU LATERAL
+    ========================================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <span><img src="logo.png" alt="logo" class="eitaporra"></span>
+            <h1>Lynzee</h1>
+        </div>
+
+        <nav>
+
+            <button
+                class="menu-item active"
+                data-section="dashboard"
+            >
+                📊 Dashboard
+            </button>
+
+            <button
+                class="menu-item"
+                data-section="produtos"
+            >
+                📦 Produtos
+            </button>
+
+            <button
+                class="menu-item"
+                data-section="movimentacoes"
+            >
+                🔄 Movimentações
+            </button>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- =========================================
+         CONTEÚDO PRINCIPAL
+    ========================================== -->
+
+    <main class="main">
+
+        <!-- CABEÇALHO -->
+
+        <header class="header">
+
+            <div>
+                <h2 id="pageTitle">
+                    Dashboard
+                </h2>
+
+                <p>
+                    Controle de estoque
+                </p>
+            </div>
+
+            <div class="connection">
+
+                <span
+                    id="connectionDot"
+                    class="connection-dot offline"
+                ></span>
+
+                <span id="connectionText">
+                    Verificando...
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================
+             DASHBOARD
+        ====================================== -->
+
+        <section
+            id="dashboard"
+            class="section active"
+        >
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        📦
+                    </div>
+
+                    <div>
+                        <span>
+                            Produtos
+                        </span>
+
+                        <strong id="totalProdutos">
+                            0
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        📊
+                    </div>
+
+                    <div>
+                        <span>
+                            Itens em estoque
+                        </span>
+
+                        <strong id="totalEstoque">
+                            0
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="card warning">
+
+                    <div class="card-icon">
+                        ⚠️
+                    </div>
+
+                    <div>
+                        <span>
+                            Estoque baixo
+                        </span>
+
+                        <strong id="estoqueBaixo">
+                            0
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        🔄
+                    </div>
+
+                    <div>
+                        <span>
+                            Movimentações
+                        </span>
+
+                        <strong id="totalMovimentacoes">
+                            0
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- LEITOR -->
+
+            <div class="scanner-box">
+
+                <div class="scanner-header">
+
+                    <div>
+
+                        <h3>
+                            🔎 Leitura de produto
+                        </h3>
+
+                        <p>
+                            Passe o código de barras
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="scanner-input">
+
+                    <input
+                        type="text"
+                        id="barcodeInput"
+                        placeholder="Aguardando código de barras..."
+                        autocomplete="off"
+                    >
+
+                    <button id="searchBarcodeButton">
+                        Buscar
+                    </button>
+
+                </div>
+
+                <div
+                    id="scannerResult"
+                    class="scanner-result"
+                ></div>
+
+            </div>
+
+
+            <!-- PRODUTOS RECENTES -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h3>
+                            Produtos recentes
+                        </h3>
+
+                        <p>
+                            Últimos produtos cadastrados
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="button primary"
+                        id="newProductButton"
+                    >
+                        + Novo produto
+                    </button>
+
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Código de barras
+                                </th>
+
+                                <th>
+                                    Produto
+                                </th>
+
+                                <th>
+                                    Preço
+                                </th>
+
+                                <th>
+                                    Fornecedor
+                                </th>
+
+                                <th>
+                                    Estoque
+                                </th>
+
+                                <th>
+                                    Mínimo
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="recentProductsTable">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- MOVIMENTAÇÕES -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h3>
+                            Movimentações recentes
+                        </h3>
+
+                        <p>
+                            Últimas alterações no estoque
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Data
+                                </th>
+
+                                <th>
+                                    Produto
+                                </th>
+
+                                <th>
+                                    Tipo
+                                </th>
+
+                                <th>
+                                    Quantidade
+                                </th>
+
+                                <th>
+                                    Observação
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="recentMovementsTable">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             PRODUTOS
+        ====================================== -->
+
+        <section
+            id="produtos"
+            class="section"
+        >
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h3>
+                            Produtos
+                        </h3>
+
+                        <p>
+                            Todos os produtos cadastrados
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="button primary"
+                        id="newProductButton2"
+                    >
+                        + Novo produto
+                    </button>
+
+                </div>
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="productSearch"
+                        placeholder="Pesquisar produto ou código de barras..."
+                    >
+
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Código
+                                </th>
+
+                                <th>
+                                    Nome
+                                </th>
+
+                                <th>
+                                    Preço
+                                </th>
+
+                                <th>
+                                    Fornecedor
+                                </th>
+
+                                <th>
+                                    Estoque
+                                </th>
+
+                                <th>
+                                    Mínimo
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="productsTable">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             MOVIMENTAÇÕES
+        ====================================== -->
+
+        <section
+            id="movimentacoes"
+            class="section"
+        >
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h3>
+                            Movimentações
+                        </h3>
+
+                        <p>
+                            Histórico de entradas e saídas
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Data
+                                </th>
+
+                                <th>
+                                    Código
+                                </th>
+
+                                <th>
+                                    Produto
+                                </th>
+
+                                <th>
+                                    Tipo
+                                </th>
+
+                                <th>
+                                    Quantidade
+                                </th>
+
+                                <th>
+                                    Observação
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="movementsTable">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         MODAL DE PRODUTO
+    ========================================== -->
+
+    <div
+        id="productModal"
+        class="modal"
+    >
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h3>
+                        Cadastrar produto
+                    </h3>
+
+                    <p>
+                        Informe os dados do produto
+                    </p>
+
+                </div>
+
+                <button
+                    id="closeProductModal"
+                    class="close-button"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="productForm">
+
+                <div class="form-group">
+
+                    <label>
+                        Código de barras
+                    </label>
+
+                    <input
+                        type="text"
+                        id="productBarcode"
+                        required
+                    >
+
+                    <small>
+                        Pode ser preenchido pelo leitor Tanca.
+                    </small>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Nome do produto
+                    </label>
+
+                    <input
+                        type="text"
+                        id="productName"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>
+                            Preço
+                        </label>
+
+                        <input
+                            type="number"
+                            id="productPrice"
+                            step="0.01"
+                            min="0"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Quantidade inicial
+                        </label>
+
+                        <input
+                            type="number"
+                            id="productInitialQuantity"
+                            min="0"
+                            value="0"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>
+                            Fornecedor
+                        </label>
+
+                        <input
+                            type="text"
+                            id="productSupplier"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Estoque mínimo
+                        </label>
+
+                        <input
+                            type="number"
+                            id="productMinimumStock"
+                            min="0"
+                            value="5"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        class="button secondary"
+                        id="cancelProduct"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="button primary"
+                    >
+                        Cadastrar produto
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         MODAL DE MOVIMENTAÇÃO
+    ========================================== -->
+
+    <div
+        id="movementModal"
+        class="modal"
+    >
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h3 id="movementTitle">
+                        Movimentação
+                    </h3>
+
+                    <p id="movementProductName">
+                        Produto
+                    </p>
+
+                </div>
+                <button id="closeMovementModal" class="close-button">×</button>
+            </div>
+
+            <form id="movementForm">
+                <input type="hidden"id="movementType">
+                <input type="hidden" id="movementBarcode">
+                <div class="form-group">
+                    <label>Quantidade</label>
+                    <input type="number" id="movementQuantity" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label>Observação</label>
+                    <textarea id="movementObservation" placeholder="Ex.: Venda, feira, teste, devolução..." required></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btnsec" id="cancelMovement">Cancelar</button>
+                    <button type="submit" class="btnprm">Registrar movimentação</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script
+        src="./js/app.js"
+        type="module"
+    ></script>
+</body>
+</html>
