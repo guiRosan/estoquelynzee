@@ -177,6 +177,10 @@ function mostrarProdutos(produtos) {
                 </td>
 
                 <td>
+                    R$ ${formatarPreco(produto.custo)}
+                </td>
+
+                <td>
                     ${produto.fornecedor || "-"}
                 </td>
 
@@ -329,6 +333,28 @@ async function buscarCodigoBarras() {
                 Erro ao consultar o produto.
             </div>
         `;
+
+    }
+
+}
+
+// ==========================================
+// LER RESPOSTA DA API
+// ==========================================
+
+async function lerRespostaAPI(resposta) {
+
+    const texto = await resposta.text();
+
+    try {
+
+        return JSON.parse(texto);
+
+    } catch {
+
+        throw new Error(
+            `O servidor respondeu algo que não é JSON. Status: ${resposta.status}`
+        );
 
     }
 
@@ -573,7 +599,12 @@ productForm.addEventListener(
                         .querySelector("#productPrice")
                         .value
                 ),
-
+            custo:
+                Number(
+                    document
+                        .querySelector("#productCost")
+                        .value
+                ),
             fornecedor:
                 document
                     .querySelector("#productSupplier")
@@ -614,17 +645,16 @@ productForm.addEventListener(
             );
 
 
+            const dados = await lerRespostaAPI(resposta);
+
             if (!resposta.ok) {
 
-                const erro =
-                    await resposta.json();
-
                 throw new Error(
-                    erro.mensagem ||
-                    "Erro ao cadastrar produto."
+                dados.mensagem ||
+                "Erro ao cadastrar produto."
                 );
 
-            }
+            };
 
 
             fecharProdutoModal();

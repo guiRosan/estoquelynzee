@@ -272,6 +272,10 @@
                                 <th>
                                     Preço
                                 </th>
+                                
+                                <th>
+                                    Custo
+                                </th>
 
                                 <th>
                                     Fornecedor
@@ -622,11 +626,26 @@
                         <input
                             type="number"
                             id="productPrice"
+                            placeholder="Preço de Venda
                             step="0.01"
                             min="0"
                             required
                         >
 
+                    </div>
+
+                    <div>
+                        <label for="productCost">
+                            Custo de compra
+                        </label>
+
+                        <input
+                            type="number"
+                            id="productCost"
+                        placeholder="Valor pago ao fornecedor"
+                        step="0.01"
+                        min="0"
+                        required>
                     </div>
 
 
