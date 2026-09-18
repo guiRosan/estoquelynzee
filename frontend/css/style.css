@@ -1,3 +1,29 @@
+/* =========================================
+   CONEXÃO
+========================================= */
+
+.connection {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.connection-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.connection-dot.online {
+    background: #22c55e;
+}
+
+.connection-dot.offline {
+    background: #ef4444;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -11,7 +37,6 @@ body {
     display: flex;
     min-height: 100vh;
 }
-
 
 /* =========================================
    SIDEBAR
@@ -534,4 +559,65 @@ tbody tr:hover {
 .eitaporra {
     width: 70px;
     height: 70px;
+}
+
+/* =========================================
+   AJUSTES DOS FORMULÁRIOS EXISTENTES
+========================================= */
+
+.campo {
+    margin-bottom: 18px;
+}
+
+.campo label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+.campo input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.campo input:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+#productForm > button[type="submit"],
+.btnprm,
+.btnsec,
+#searchBarcodeButton {
+    border: none;
+    border-radius: 8px;
+    padding: 11px 16px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#productForm > button[type="submit"],
+.btnprm,
+#searchBarcodeButton {
+    background: #c76210;
+    color: black;
+}
+
+#productForm > button[type="submit"]:hover,
+.btnprm:hover,
+#searchBarcodeButton:hover {
+    background: #c4af94;
+}
+
+.btnsec {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.btnsec:hover {
+    background: #d1d5db;
 }

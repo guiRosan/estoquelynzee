@@ -3,18 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <title>Estoque Lynzee</title>
 
-    <title>Sistema de Estoque</title>
+    <link rel="stylesheet" href="./css/style.css">
 
-    <link
-        rel="stylesheet"
-        href="./css/style.css"
-    >
 </head>
 
 <body>
@@ -434,6 +428,10 @@
                                 </th>
 
                                 <th>
+                                    Custo
+                                </th>
+
+                                <th>
                                     Fornecedor
                                 </th>
 
@@ -581,146 +579,117 @@
 
             <form id="productForm">
 
-                <div class="form-group">
-
-                    <label>
+                <div class="campo">
+                    <label for="productBarcode">
                         Código de barras
                     </label>
 
                     <input
                         type="text"
                         id="productBarcode"
+                        name="codigo_barras"
                         required
                     >
-
-                    <small>
-                        Pode ser preenchido pelo leitor Tanca.
-                    </small>
-
                 </div>
 
 
-                <div class="form-group">
-
-                    <label>
+                <div class="campo">
+                    <label for="productName">
                         Nome do produto
                     </label>
 
                     <input
                         type="text"
                         id="productName"
+                        name="nome"
                         required
                     >
-
                 </div>
 
 
-                <div class="form-row">
+                <div class="campo">
+                    <label for="productPrice">
+                        Preço de venda
+                    </label>
 
-                    <div class="form-group">
-
-                        <label>
-                            Preço
-                        </label>
-
-                        <input
-                            type="number"
-                            id="productPrice"
-                            placeholder="Preço de Venda
-                            step="0.01"
-                            min="0"
-                            required
-                        >
-
-                    </div>
-
-                    <div>
-                        <label for="productCost">
-                            Custo de compra
-                        </label>
-
-                        <input
-                            type="number"
-                            id="productCost"
-                        placeholder="Valor pago ao fornecedor"
+                    <input
+                        type="number"
+                        id="productPrice"
+                        name="preco"
                         step="0.01"
                         min="0"
-                        required>
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Quantidade inicial
-                        </label>
-
-                        <input
-                            type="number"
-                            id="productInitialQuantity"
-                            min="0"
-                            value="0"
-                            required
-                        >
-
-                    </div>
-
-                </div>
-
-
-                <div class="form-row">
-
-                    <div class="form-group">
-
-                        <label>
-                            Fornecedor
-                        </label>
-
-                        <input
-                            type="text"
-                            id="productSupplier"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Estoque mínimo
-                        </label>
-
-                        <input
-                            type="number"
-                            id="productMinimumStock"
-                            min="0"
-                            value="5"
-                            required
-                        >
-
-                    </div>
-
-                </div>
-
-
-                <div class="modal-actions">
-
-                    <button
-                        type="button"
-                        class="button secondary"
-                        id="cancelProduct"
+                        placeholder="0.00"
+                        required
                     >
-                        Cancelar
-                    </button>
-
-                    <button
-                        type="submit"
-                        class="button primary"
-                    >
-                        Cadastrar produto
-                    </button>
-
                 </div>
+
+
+                <div class="campo">
+                    <label for="productCost">
+                        Custo do produto
+                    </label>
+
+                    <input
+                        type="number"
+                        id="productCost"
+                        name="custo"
+                        step="0.01"
+                        min="0"
+                        placeholder="0.00"
+                        required
+                    >
+                </div>
+
+
+                <div class="campo">
+                    <label for="productSupplier">
+                        Fornecedor
+                    </label>
+
+                    <input
+                        type="text"
+                        id="productSupplier"
+                        name="fornecedor"
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="productInitialQuantity">
+                        Quantidade inicial
+                    </label>
+
+                    <input
+                        type="number"
+                        id="productInitialQuantity"
+                        name="quantidade_inicial"
+                        min="0"
+                        step="1"
+                        value="0"
+                        required
+                    >
+                </div>
+
+
+                <div class="campo">
+                    <label for="productMinimumStock">
+                        Estoque mínimo
+                    </label>
+
+                    <input
+                        type="number"
+                        id="productMinimumStock"
+                        name="estoque_minimo"
+                        min="0"
+                        step="1"
+                        value="5"
+                        required
+                    >
+                </div>
+
+
+                <button type="submit">
+                    Cadastrar produto
+                </button>
 
             </form>
 
@@ -757,7 +726,7 @@
             </div>
 
             <form id="movementForm">
-                <input type="hidden"id="movementType">
+                <input type="hidden" id="movementType">
                 <input type="hidden" id="movementBarcode">
                 <div class="form-group">
                     <label>Quantidade</label>
