@@ -44,18 +44,18 @@ app.get("/api/database", async (req, res) => {
         );
 
         res.json({
-            banco: "MySQL",
+            banco: "PostgreSQL",
             status: "conectado",
             resultado
         });
     } catch (erro) {
         console.error(
-            "Erro ao conectar ao MySQL:",
+            "Erro ao conectar ao PostgreSQL:",
             erro.message
         );
 
         res.status(500).json({
-            banco: "MySQL",
+            banco: "PostgreSQL",
             status: "erro",
             mensagem: erro.message
         });
