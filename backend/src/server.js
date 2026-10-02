@@ -17,17 +17,26 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 
+// ========================================
 // Middlewares
+// ========================================
+
 app.use(cors());
 app.use(express.json());
 
 
+// ========================================
 // Rotas da API
+// ========================================
+
 app.use("/api/produtos", produtosRoutes);
 app.use("/api/movimentacoes", movimentacoesRoutes);
 
 
+// ========================================
 // Status do sistema
+// ========================================
+
 app.get("/api/status", (req, res) => {
     res.json({
         sistema: "Sistema de Estoque Lynzee",
@@ -36,19 +45,25 @@ app.get("/api/status", (req, res) => {
 });
 
 
-// Teste de conexão com o banco
+// ========================================
+// Teste de conexão com PostgreSQL
+// ========================================
+
 app.get("/api/database", async (req, res) => {
     try {
-        const [resultado] = await pool.query(
+
+        const resultado = await pool.query(
             "SELECT 1 AS conectado"
         );
 
         res.json({
             banco: "PostgreSQL",
             status: "conectado",
-            resultado
+            resultado: resultado.rows
         });
+
     } catch (erro) {
+
         console.error(
             "Erro ao conectar ao PostgreSQL:",
             erro.message
@@ -63,7 +78,10 @@ app.get("/api/database", async (req, res) => {
 });
 
 
+// ========================================
 // Rota para APIs inexistentes
+// ========================================
+
 app.use("/api", (req, res) => {
     res.status(404).json({
         mensagem: "Rota da API não encontrada."
@@ -71,13 +89,22 @@ app.use("/api", (req, res) => {
 });
 
 
+// ========================================
 // Arquivos do frontend
-const frontendPath = path.join(__dirname, "../../frontend");
+// ========================================
+
+const frontendPath = path.join(
+    __dirname,
+    "../../frontend"
+);
 
 app.use(express.static(frontendPath));
 
 
+// ========================================
 // Página inicial
+// ========================================
+
 app.get("/", (req, res) => {
     res.sendFile(
         path.join(frontendPath, "index.html")
@@ -85,9 +112,16 @@ app.get("/", (req, res) => {
 });
 
 
+// ========================================
 // Tratamento geral de erros
+// ========================================
+
 app.use((erro, req, res, next) => {
-    console.error("Erro interno:", erro);
+
+    console.error(
+        "Erro interno:",
+        erro
+    );
 
     res.status(500).json({
         mensagem: "Erro interno do servidor."
@@ -95,8 +129,12 @@ app.use((erro, req, res, next) => {
 });
 
 
-// Inicialização
+// ========================================
+// Inicialização do servidor
+// ========================================
+
 app.listen(PORT, () => {
+
     console.log("");
     console.log("====================================");
     console.log("       SISTEMA DE ESTOQUE LYNZEE");
@@ -104,4 +142,5 @@ app.listen(PORT, () => {
     console.log(`Servidor: http://localhost:${PORT}`);
     console.log("====================================");
     console.log("");
+
 });
